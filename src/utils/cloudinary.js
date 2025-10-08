@@ -1,6 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
-import { ApiError } from "./api-error.js";
 import dotenv from "dotenv";
 import path from "path";
 
@@ -40,6 +39,16 @@ export const uploadOnCloudinary = async (filePath) => {
         if (fs.existsSync(absolutePath)) {
             fs.unlinkSync(absolutePath);
         }
+        return null;
+    }
+};
+
+export const deleteFromCloudinary = async (publicId) => {
+    try {
+        await cloudinary.uploader.destroy(publicId);
+        console.log(`Image is deleted with Public Id: ${publicId}`);
+    } catch (error) {
+        console.log("Error deleting from cloudinary");
         return null;
     }
 };

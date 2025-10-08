@@ -41,23 +41,25 @@ export const userRegisterValidator = () => {
             .isLength({ min: 5 })
             .withMessage("Password must be atleast 5 characters long"),
 
-        body("avatar").custom((_, { req }) => {
-            if (!req.files?.avatar || req.files.avatar.length === 0) {
-                throw new ApiError(400, "Avatar file is required");
-            }
+        body("avatar")
+            .optional()
+            .custom((_, { req }) => {
+                // if (!req.files?.avatar || req.files.avatar.length === 0) {
+                //     throw new ApiError(400, "Avatar file is required");
+                // }
 
-            const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
-            const file = req.files?.avatar?.[0];
+                const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
+                const file = req.files?.avatar?.[0];
 
-            if (!allowedTypes.includes(file.mimetype)) {
-                throw new ApiError(
-                    400,
-                    "Avatar must be a JPEG, PNG, WEBP file"
-                );
-            }
+                if (!allowedTypes.includes(file.mimetype)) {
+                    throw new ApiError(
+                        400,
+                        "Avatar must be a JPEG, PNG, WEBP file"
+                    );
+                }
 
-            return true;
-        }),
+                return true;
+            }),
 
         body("coverImage")
             .optional()
