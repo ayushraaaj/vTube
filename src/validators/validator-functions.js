@@ -78,3 +78,11 @@ export const userRegisterValidator = () => {
             }),
     ];
 };
+
+export const userLoginValidator = () => {
+    return [
+        body("username").notEmpty().withMessage("Username is required"),
+
+        body("password").notEmpty().withMessage("Password is required"),
+    ];
+};
